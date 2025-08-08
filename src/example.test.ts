@@ -111,15 +111,15 @@ test('reproduce bug', async () => {
     /*
         select 
             `c0`.* 
-        from 
-            `car` as `c0` 
+        from `
+            car` as `c0` 
             left join `car_tags` as `c2` on `c0`.`id` = `c2`.`car_id` 
             left join `tag` as `c1` on `c2`.`tag_id` = `c1`.`id` 
-                and `c1`.`account_id` = '{"$or":[{"id":{"$in":[1]}},{"id":{"$eq":null}}]}' 
+                and `c1`.`account_id` = '{"$and":[{"id":{"$in":[1]}},{"id":{"$eq":null}}]}' 
         where 
             `c0`.`account_id` in (1) 
             and `c0`.`brand` = 'audi' 
-            and `c1`.`id` in (1)
+            and `c1`.`name` = 'super fast'
     */
     const cars: Array<Car> = await orm.em.getRepository(Car)
         .find({
